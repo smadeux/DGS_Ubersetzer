@@ -14,6 +14,8 @@ if s == 'y':
     while True:
         sign = input("Type the sign and press enter (quit to exit): ")
         if sign == 'quit':
+            # tracker.normalize_data()
+            md.train_model('coords.csv')
             break
         
         tracker.camera_capture(sign)
@@ -24,19 +26,19 @@ elif s == 'r':
 else:  
     # Use reference material
     start_time = time.gmtime()
-    # tracker.camera_capture(sign='A', source='assets/A.mp4')
-    # tracker.camera_capture(sign='B', source='assets/B.mp4')
-    # tracker.camera_capture(sign='C', source='assets/C.mp4')
-    # tracker.camera_capture(sign='D', source='assets/D.mp4')
+    tracker.camera_capture(sign='A', source='assets/A.mp4')
+    tracker.camera_capture(sign='B', source='assets/B.mp4')
+    tracker.camera_capture(sign='C', source='assets/C.mp4')
+    tracker.camera_capture(sign='D', source='assets/D.mp4')
     # tracker.camera_capture(sign='E', source='assets/E.mp4')
     # tracker.camera_capture(sign='F', source='assets/F.mp4')
     # tracker.camera_capture(sign='G', source='assets/G.mp4')
     # tracker.camera_capture(sign='H', source='assets/H.mp4')
     # tracker.camera_capture(sign='I', source='assets/I.mp4')
     # tracker.camera_capture(sign='J', source='assets/J.mp4')
-    tracker.camera_capture(sign='O', source='assets/O.mp4')
+    # tracker.camera_capture(sign='O', source='assets/O.mp4')
     # tracker.camera_capture(sign='Ä', source='assets/Ä.mp4')
-    tracker.camera_capture(sign='Ö', source='assets/Ö.mp4')
+    # tracker.camera_capture(sign='Ö', source='assets/Ö.mp4')
     end_coll = time.gmtime()
 
     # Train model

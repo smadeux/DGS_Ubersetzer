@@ -1,7 +1,6 @@
 import time
 import os
 import os.path
-import sys
 from pathlib import Path
 import csv
 
@@ -11,7 +10,7 @@ import numpy as np
 import pandas as pd
 import pickle
 
-FRAME_COUNT = 3
+FRAME_COUNT = 1
 
 class HandTracker:
 
@@ -30,6 +29,10 @@ class HandTracker:
         self.mp_hands = mp.solutions.hands
         self.mp_draw = mp.solutions.drawing_utils
         self.frames = [[] for i in range(FRAME_COUNT)]
+        self.dataframe = pd.DataFrame
+        self.sign_list = []
+        self.sign_counter = 0
+        self.prev_sign = ''
         self.training = training
         if not self.training:
             self.f = open('sign_lang.pkl', 'rb')
@@ -48,17 +51,25 @@ class HandTracker:
             9: 'J'
         }
 
-    def normalize_csv(self):
-        columns = ['horiz_mov_{}'.format(val) for val in range(FRAME_COUNT-1)]
-        for frame in range(FRAME_COUNT):
-            for val in range(1,21):
-                columns += ['x{}_{}'.format(val, frame), 'y{}_{}'.format(val, frame), 'z{}_{}'.format(val, frame)]
-        dataframe = pd.read_csv('coords.csv', names=columns)
-        array = dataframe.values
-        max_data = max(array)
-        min_data = min(array)
-        list = [((var-min_data)/(max_data-min_data)) for rows in array for var in rows]
-        print(list)
+    def normalize_data(self):
+        output_list = []
+        # columns = ['horiz_mov_{}'.format(val) for val in range(FRAME_COUNT-1)]
+        # for frame in range(FRAME_COUNT):
+        #     for val in range(1,21):
+        #         columns += ['x{}_{}'.format(val, frame), 'y{}_{}'.format(val, frame), 'z{}_{}'.format(val, frame)]
+        # dataframe = pd.read_csv('coords.csv', names=columns, header=0)
+        array = self.dataframe.values
+        array_flat = array.flatten()
+        max_data = max(array_flat)
+        min_data = min(array_flat)
+        print(array)
+        for row in array:
+            for val in row:
+                val = ((val - min_data)/(max_data - min_data))
+            output_list.append(row.tolist())
+
+        assert(len(output_list) == len(self.sign_list))
+        print(output_list)
 
     def camera_capture(self, sign="", save_csv=True, draw=True, 
                        num_hands=1, source=0):
@@ -136,6 +147,8 @@ class HandTracker:
                             # Write hand coordinates to csv
                             csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                             flat_frames.insert(0, sign)
+                            # self.dataframe.append(pd.DataFrame(flat_frames), ignore_index=True)
+                            # self.sign_list.append(sign)
                             # print('Flat_frames: ', flat_frames)
                             csv_writer.writerow(flat_frames)
                         else:
@@ -143,7 +156,14 @@ class HandTracker:
                             X = pd.DataFrame([flat_frames])
                             sign_class = self.model.predict(X)[0]
                             sign_prob = self.model.predict_proba(X)[0]
-                            print(sign_class, sign_prob)
+                            if self.prev_sign != sign_class:
+                                self.sign_counter = 0
+                            else:
+                                if self.sign_counter == 4:
+                                    print(sign_class, sign_prob)
+                                self.sign_counter += 1
+                            self.prev_sign = sign_class
+                            # print(sign_class, ['{:.5f}'.format(val) for val in sign_prob])
                             # for ind, prob in enumerate(sign_prob):
                             #     if prob > 0.30:
                             #         print(self.letter_map[ind], prob)
@@ -155,6 +175,7 @@ class HandTracker:
 
                 cv2.imshow("Image", img)
                 if cv2.waitKey(10) & 0xFF == ord('q'):
+                    print()
                     cv2.destroyAllWindows()
                     if self.training:
                         csv_file.close()
