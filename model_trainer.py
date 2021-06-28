@@ -19,14 +19,14 @@ def train_model(file_name):
     y = array[:,0]
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1234)
     model = LogisticRegression(solver='liblinear')
-    print(X_train)
-    print(X_test)
     # print(np.isnan(X_train).any(), np.isnan(X_test).any(), np.isnan(y_train).any(), np.isnan(y_test).any())
     model = model.fit(X_train, y_train)
 
     # Run tests.
+    print(file_name, ": ")
     AI_test.accuracy_score_test(model, X_test, y_test)
     AI_test.confusion_matrix_test(model, X_train, X_test, y_train, y_test)
+    print('\n')
 
     # Export model.
     with open('sign_lang.pkl', 'wb') as f:

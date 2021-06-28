@@ -15,6 +15,7 @@ from sklearn.model_selection import learning_curve
 from sklearn.svm import SVC
 
 def confusion_matrix_test(model, X_train, X_test, y_train, y_test):
+    print("Confution Matrix Test")
     model.fit(X_train, y_train)
     predicted = model.predict(X_test)
     matrix = confusion_matrix(y_test, predicted)
@@ -31,6 +32,7 @@ def confusion_matrix_test(model, X_train, X_test, y_train, y_test):
     print(matrix)
 
 def accuracy_score_test(model, X_test, y_test):
+    print("Accuracy Score Test")
     yhat = model.predict(X_test)
     print(accuracy_score(y_test, yhat))
 

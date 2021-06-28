@@ -10,6 +10,8 @@ import numpy as np
 import pandas as pd
 import pickle
 
+from pandas import core
+
 FRAME_COUNT = 1
 
 class HandTracker:
@@ -21,6 +23,15 @@ class HandTracker:
                  training=False):
                  #height = 810, width = 1080):
         
+        # if os.path.exists('coords.csv'):
+        #     os.remove('coords.csv')
+        # if os.path.exists('coords_norot.csv'):
+        #     os.remove('coords_norot.csv')
+        # if os.path.exists('coords_norm.csv'):
+        #     os.remove('coords_norm.csv')
+        # if os.path.exists('coords_norm_norot.csv'):
+        #     os.remove('coords_norm_norot.csv')
+        
         # Mediapipe init settings
         self.static_image_mode = static_image_mode
         self.max_num_hands = max_num_hands
@@ -30,46 +41,130 @@ class HandTracker:
         self.mp_draw = mp.solutions.drawing_utils
         self.frames = [[] for i in range(FRAME_COUNT)]
         self.dataframe = pd.DataFrame
+        self.dataframe_norot = pd.DataFrame
         self.sign_list = []
+        self.sign_list_norot = []
         self.sign_counter = 0
         self.prev_sign = ''
+        self.header_points = ['class']
+        for frame in range(FRAME_COUNT):
+            # Leave out point at the base of the wrist.
+            for val in range(1,21):
+                self.header_points += ['x{}_{}'.format(val, frame), 'y{}_{}'.format(val, frame), 'z{}_{}'.format(val, frame)]
         self.training = training
         if not self.training:
             self.f = open('sign_lang.pkl', 'rb')
             self.model = pickle.load(self.f)
 
-        self.letter_map = {
-            0: 'A',
-            1: 'B',
-            2: 'C' ,
-            3: 'D',
-            4: 'E',
-            5: 'F',
-            6: 'G',
-            7: 'H',
-            8: 'I',
-            9: 'J'
-        }
+        self.file_names = ['coords.csv','coords_norot.csv','coords_norm.csv','coords_norm_norot.csv']
+
+        for f in self.file_names:
+            if os.path.exists(f):
+                os.remove(f)
+            with open(f, mode='a', newline='') as csv_file:
+                csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                csv_writer.writerow(self.header_points)
+            
+        if os.path.exists('log.txt'):
+            os.remove('log.txt')
+
+        self.csv_file = open('coords.csv', mode='a', newline='')
+        self.csv_file_norot = open('coords_norot.csv', mode='a', newline='')
+        self.csv_writer = csv.writer(self.csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        self.csv_writer_norot = csv.writer(self.csv_file_norot, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
     def normalize_data(self):
-        output_list = []
-        # columns = ['horiz_mov_{}'.format(val) for val in range(FRAME_COUNT-1)]
-        # for frame in range(FRAME_COUNT):
-        #     for val in range(1,21):
-        #         columns += ['x{}_{}'.format(val, frame), 'y{}_{}'.format(val, frame), 'z{}_{}'.format(val, frame)]
-        # dataframe = pd.read_csv('coords.csv', names=columns, header=0)
-        array = self.dataframe.values
-        array_flat = array.flatten()
-        max_data = max(array_flat)
-        min_data = min(array_flat)
-        print(array)
-        for row in array:
-            for val in row:
-                val = ((val - min_data)/(max_data - min_data))
-            output_list.append(row.tolist())
+        # print("In normalize_data begin: ")
+        # self.dataframe.info()
+        for col in self.header_points[1:]:
+            column = self.dataframe[col]
+            column_norm = [((var-column.min())/(column.max()-column.min())) for var in column]
+            self.dataframe.loc[:,col] = column_norm
+        
+        # print('After normalization: ')
+        # self.dataframe.info()
+        norm_list = self.dataframe.values.tolist()
+        # print('After tolist: ')
+        # self.dataframe.info()
+        # print("coords_norm: ", len(norm_list))
+        with open(self.file_names[2], mode='a', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            for sign, row in zip(self.sign_list, norm_list):
+                row.insert(0, sign)
+                csv_writer.writerow(row)
 
-        assert(len(output_list) == len(self.sign_list))
-        print(output_list)
+        for col in self.header_points[1:]:
+            column = self.dataframe_norot[col]
+            column_norm = [((var-column.min())/(column.max()-column.min())) for var in column]
+            self.dataframe_norot.loc[:,col] = column_norm
+        
+        # self.dataframe_norot.info()
+        norm_list = self.dataframe_norot.values.tolist()
+        # print("coords_norm_norot: ", len(norm_list))
+        with open(self.file_names[3], mode='a', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            for sign, row in zip(self.sign_list_norot, norm_list):
+                row.insert(0, sign)
+                csv_writer.writerow(row)
+
+    def header_to_csv(self):
+        self.dataframe = pd.DataFrame(columns=self.header_points[1:])
+        self.dataframe_norot = pd.DataFrame(columns=self.header_points[1:])
+
+
+    def points_to_csv(self, sign, hand_points):
+        coords_row = list(np.array([[(points.x - hand_points.landmark[0].x), 
+                                     (points.y - hand_points.landmark[0].y), 
+                                      points.z] 
+                                      for points in hand_points.landmark[1:]]).flatten())
+        coords_row_rotate = list(np.array([[(points.z), 
+                                            (points.y - hand_points.landmark[0].y), 
+                                            (points.x - hand_points.landmark[0].x)] 
+                                             for points in hand_points.landmark[1:]]).flatten())
+
+        # Dataframes for later normalization
+        df_series = pd.Series(coords_row, index=self.dataframe.columns)
+        df_series_rotate = pd.Series(coords_row_rotate, index=self.dataframe.columns)
+        self.sign_list.append(sign)
+        self.sign_list.append(sign)
+        self.sign_list_norot.append(sign)
+        self.dataframe = self.dataframe.append(df_series, ignore_index=True)
+        self.dataframe = self.dataframe.append(df_series_rotate, ignore_index=True)
+        self.dataframe_norot = self.dataframe_norot.append(df_series, ignore_index=True)
+        # print("DaTaFrAmE: ")
+        # self.dataframe.info()
+
+        # Get rid of scientific notation
+        coords_row = ['{:.15f}'.format(var) for var in coords_row]
+        coords_row_rotate = ['{:.15f}'.format(var) for var in coords_row_rotate]
+
+        coords_row.insert(0, sign)
+        coords_row_rotate.insert(0, sign)
+
+        self.csv_writer.writerow(coords_row)
+        self.csv_writer.writerow(coords_row_rotate)
+        self.csv_writer_norot.writerow(coords_row)
+        
+    def predict_sign(self, hand_points):
+        coords_row = list(np.array([[(points.x - hand_points.landmark[0].x), 
+                                     (points.y - hand_points.landmark[0].y), 
+                                      points.z] 
+                                      for points in hand_points.landmark[1:]]).flatten())
+
+        # Get rid of scientific notation
+        coords_row = ['{:.15f}'.format(var) for var in coords_row]
+
+        # Predict sign
+        X = pd.DataFrame([coords_row])
+        sign_class = self.model.predict(X)[0]
+        sign_prob = self.model.predict_proba(X)[0]
+        if self.prev_sign != sign_class:
+            self.sign_counter = 0
+        else:
+            if self.sign_counter == 4:
+                print(sign_class, sign_prob)
+            self.sign_counter += 1
+        self.prev_sign = sign_class
 
     def camera_capture(self, sign="", save_csv=True, draw=True, 
                        num_hands=1, source=0):
@@ -82,19 +177,7 @@ class HandTracker:
         # Create file for tracking points and set up header.
         if self.training:
             csv_name = time.ctime(time.time())
-            if(not os.path.exists('coords.csv')):
-                landmarks = ['class']
-                landmarks += ['horiz_mov_{}'.format(val) for val in range(FRAME_COUNT-1)]
-                for frame in range(FRAME_COUNT):
-                    for val in range(1,21):
-                        landmarks += ['x{}_{}'.format(val, frame), 'y{}_{}'.format(val, frame), 'z{}_{}'.format(val, frame)]
-                
-                csv_file = open('coords.csv', mode='a', newline='')
-                csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                csv_writer.writerow(landmarks)
-                csv_file.close()
-        
-            csv_file = open('coords.csv', mode='a', newline='')
+            self.header_to_csv()
 
         with self.mp_hands.Hands(
                 min_detection_confidence=self.min_detection_confidence,
@@ -104,8 +187,7 @@ class HandTracker:
                 if not success:
                     cap.release()
                     cv2.destroyAllWindows()
-                    break
-                    
+                    break    
 
                 # Flip image, convert to RGB, and draw landmarks.
                 if source == 0:
@@ -116,69 +198,55 @@ class HandTracker:
                     for hand_landmarks in self.results.multi_hand_landmarks:    
                         self.mp_draw.draw_landmarks(img, hand_landmarks, self.mp_hands.HAND_CONNECTIONS)
                 
-                self.frames.insert(0, [])
-                self.frames.pop(-1)
+                # self.frames.insert(0, [])
+                # self.frames.pop(-1)
                 if self.results.multi_hand_landmarks:
                     coords = self.results.multi_hand_landmarks
                     for hand in coords:
-                        coords_row = list(np.array([[(points.x - hand.landmark[0].x), 
-                                                    (points.y - hand.landmark[0].y), 
-                                                    points.z] 
-                                                    for points in hand.landmark[1:]]).flatten())
-                
-                    self.frames[0] = coords_row
-                    if self.frames[-1] != []:
-                        horiz_mov = []
-                        for i in range(FRAME_COUNT-1):
-                            horiz_mov.append(abs(self.frames[i][11] - self.frames[i+1][11]))
-                        flat_frames = [item for sublist in self.frames for item in sublist]
-                        for i, point in enumerate(horiz_mov):
-                            flat_frames.insert(i, point)
-                        # for number in flat_frames:
-                        #     number = f"{number:15f}"
-                        # Normalize the data.
-                        max_data = max(flat_frames)
-                        min_data = min(flat_frames)
-                        flat_frames = [((var-min_data)/(max_data-min_data)) for var in flat_frames]
-
-                        flat_frames = ['{:.15f}'.format(var) for var in flat_frames]
-                
                         if self.training:
-                            # Write hand coordinates to csv
-                            csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                            flat_frames.insert(0, sign)
-                            # self.dataframe.append(pd.DataFrame(flat_frames), ignore_index=True)
-                            # self.sign_list.append(sign)
-                            # print('Flat_frames: ', flat_frames)
-                            csv_writer.writerow(flat_frames)
+                            self.points_to_csv(sign, hand)
                         else:
-                            # Predict sign
-                            X = pd.DataFrame([flat_frames])
-                            sign_class = self.model.predict(X)[0]
-                            sign_prob = self.model.predict_proba(X)[0]
-                            if self.prev_sign != sign_class:
-                                self.sign_counter = 0
-                            else:
-                                if self.sign_counter == 4:
-                                    print(sign_class, sign_prob)
-                                self.sign_counter += 1
-                            self.prev_sign = sign_class
-                            # print(sign_class, ['{:.5f}'.format(val) for val in sign_prob])
-                            # for ind, prob in enumerate(sign_prob):
-                            #     if prob > 0.30:
-                            #         print(self.letter_map[ind], prob)
-                            #     else:
-                            #         print("No Sign")
-                else:
-                    for frame in self.frames:
-                        frame.clear()
+                            self.predict_sign(hand)
+                # else:
+                #     for frame in self.frames:
+                #         frame.clear()
 
                 cv2.imshow("Image", img)
+
                 if cv2.waitKey(10) & 0xFF == ord('q'):
-                    print()
                     cv2.destroyAllWindows()
-                    if self.training:
-                        csv_file.close()
-                    else:
+                    self.cleanup_data()
+                    if not self.training:
                         self.f.close()
                     break
+
+        if self.training:
+            self.cleanup_data()
+            return self.dataframe, self.dataframe_norot, self.sign_list, self.sign_list_norot
+    
+    def cleanup_data(self):
+        self.normalize_data()
+        self.sign_list.clear()
+        self.sign_list_norot.clear()
+
+    def destroy(self):
+        self.csv_file.close()
+        self.csv_file_norot.close()
+
+#Non class code
+letter_map = {
+            0: 'A',
+            1: 'B',
+            2: 'C' ,
+            3: 'D',
+            4: 'E',
+            5: 'F',
+            6: 'G',
+            7: 'H',
+            8: 'I',
+            9: 'J'
+        }
+
+letter_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+               'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+               'U', 'V', 'W', 'X', 'Y', 'Z']

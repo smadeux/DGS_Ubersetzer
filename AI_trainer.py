@@ -1,5 +1,8 @@
 import os
 import time
+import sys
+
+import pandas as pd
 
 import hand_tracker as ht
 import model_trainer as md
@@ -8,6 +11,10 @@ tracker = ht.HandTracker(training=True, min_detection_confidence=0.7)
 
 # if os.path.exists('coords.csv'):
 #     os.remove('coords.csv')
+df = pd.DataFrame(columns=tracker.header_points[1:])
+df_norot = pd.DataFrame(columns=tracker.header_points[1:])
+sign_list = []
+sign_list_norot = []
 
 s = input('Use webcam for training? y/n: ')
 if s == 'y':
@@ -21,34 +28,29 @@ if s == 'y':
         tracker.camera_capture(sign)
 elif s == 't':
     md.train_model('coords.csv')
-elif s == 'r':
-    tracker.normalize_csv()
 else:  
     # Use reference material
-    start_time = time.gmtime()
-    tracker.camera_capture(sign='A', source='assets/A.mp4')
-    tracker.camera_capture(sign='B', source='assets/B.mp4')
-    tracker.camera_capture(sign='C', source='assets/C.mp4')
-    tracker.camera_capture(sign='D', source='assets/D.mp4')
-    # tracker.camera_capture(sign='E', source='assets/E.mp4')
-    # tracker.camera_capture(sign='F', source='assets/F.mp4')
-    # tracker.camera_capture(sign='G', source='assets/G.mp4')
-    # tracker.camera_capture(sign='H', source='assets/H.mp4')
-    # tracker.camera_capture(sign='I', source='assets/I.mp4')
-    # tracker.camera_capture(sign='J', source='assets/J.mp4')
-    # tracker.camera_capture(sign='O', source='assets/O.mp4')
-    # tracker.camera_capture(sign='Ä', source='assets/Ä.mp4')
-    # tracker.camera_capture(sign='Ö', source='assets/Ö.mp4')
-    end_coll = time.gmtime()
+    start_time = time.perf_counter()
+    for s in ht.letter_list:
+        temp_df, temp_df_norot, temp_sign_list, temp_sign_list_norot = tracker.camera_capture(sign=s, source='assets/{}.mp4'.format(s))
+        print('Sign {} Complete'.format(s))
 
+    # tracker.normalize_data(df, df_norot, sign_list, sign_list_norot)
+   
+    tracker.destroy()
+    end_coll = time.perf_counter()
     # Train model
+    sys.stdout = open('log.txt', "a")
+    md.train_model('coords_norot.csv')
     md.train_model('coords.csv')
+    md.train_model('coords_norm.csv')
+    md.train_model('coords_norm_norot.csv')
 
-end_time = time.gmtime()
+    end_time = time.perf_counter()
 
-print('Data collection took {}m {}s'.format((end_coll.tm_min - start_time.tm_min), 
-                                            (end_coll.tm_sec - start_time.tm_sec)))
-print('Training took {}m {}s'.format((end_time.tm_min - end_coll.tm_min), 
-                                     (end_time.tm_sec - end_coll.tm_sec)))
-print('Total time {}m {}s'.format((end_time.tm_min - start_time.tm_min), 
-                                  (end_time.tm_sec - start_time.tm_sec)))
+    print('Data collection took {}m {}s'.format(int((end_coll - start_time)/60), 
+                                                int((end_coll - start_time)%60)))
+    print('Training took {}m {}s'.format(int((end_time - end_coll)/60), 
+                                        int((end_time - end_coll)%60)))
+    print('Total time {}m {}s'.format(int((end_time - start_time)/60), 
+                                    int((end_time - start_time)%60)))
