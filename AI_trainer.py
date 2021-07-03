@@ -7,14 +7,14 @@ import pandas as pd
 import hand_tracker as ht
 import model_trainer as md
 
-tracker = ht.HandTracker(training=True, min_detection_confidence=0.7)
+# tracker = ht.HandTracker(training=True, min_detection_confidence=0.7)
 
 # if os.path.exists('coords.csv'):
 #     os.remove('coords.csv')
-df = pd.DataFrame(columns=tracker.header_points[1:])
-df_norot = pd.DataFrame(columns=tracker.header_points[1:])
-sign_list = []
-sign_list_norot = []
+# df = pd.DataFrame(columns=tracker.header_points[1:])
+# df_norot = pd.DataFrame(columns=tracker.header_points[1:])
+# sign_list = []
+# sign_list_norot = []
 
 s = input('Use webcam for training? y/n: ')
 if s == 'y':
