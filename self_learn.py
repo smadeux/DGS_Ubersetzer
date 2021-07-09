@@ -53,7 +53,7 @@ def parse_feedback_file(txt_file_name, true_words):
             print("Too much uncertainty!")
         print_pred_letter_list(true)
         print_pred_letter_list(pred)
-        edit_csv("hund.csv", pred, true)
+        edit_csv("data\predict.csv", pred, true)
 
 
 def seperate_letters(file_word, true_word):
@@ -144,40 +144,54 @@ def edit_csv(csv_file_name, pred_letters, true_letters):
     letter_count = 0
     counting_letter = ''
     counted_list = []
-
+    
     for index, letter in enumerate(classes):
-        # Skip unmapped letters
-        while not pred_letters[pred_i].is_mapped:
-            pred_i = pred_i + 1
-        if letter != pred_letters[pred_i].letter and counting_letter != '':
-            pred_i = pred_i + 1
-            counting_letter = ''
-        if letter != pred_letters[pred_i].letter:
-            letter_count = 0
-            data_frame.at[index, 'class'] = 'junk1'
-        elif letter == pred_letters[pred_i].letter and letter_count == ht.FRAMES_TO_PRINT:
-            counting_letter = letter
-            print(counting_letter)
-            #Predicted letter is not mapped
-            if not pred_letters[pred_i].is_mapped:
-                for i in counted_list:
-                    data_frame.at[i, 'class'] = 'junk2'
-                data_frame.at[index, 'class'] = 'junk3'
-            elif pred_letters[pred_i].letter != true_letters[pred_letters[pred_i].mapped_pos[0]].letter:
-                # Predicted letter is mapped to a different true letter
-                data_frame.at[index,'class'] = true_letters[pred_letters[pred_i].mapped_pos[0]].letter
-                for i in counted_list:
-                    data_frame.at[i,'class'] = true_letters[pred_letters[pred_i].mapped_pos[0]].letter
-            letter_count = letter_count + 1
-        elif letter == pred_letters[pred_i].letter:
-            letter_count = letter_count + 1
-            counted_list.append(index)
+        if pred_i > len(pred_letters) - 1:
+            
+            data_frame.at[index, 'class'] = 'junk5'
+            continue
+        else:
+            # Skip unmapped letters
+            print("pred_i: {}".format(pred_i))
+            print("len: {}".format(len(pred_letters)))
+            while not pred_letters[pred_i].is_mapped:
+                if pred_i < len(pred_letters) - 1:
+                    pred_i = pred_i + 1
+                else:
+                    break
+            if letter != pred_letters[pred_i].letter and counting_letter != '':
+                pred_i = pred_i + 1
+                letter_count = 0
+                counting_letter = ''
+            if pred_i > len(pred_letters) - 1 or not pred_letters[pred_i].is_mapped:
+                data_frame.at[index, 'class'] = 'junk4'
+                continue
+            if letter != pred_letters[pred_i].letter:
+                letter_count = 0
+                data_frame.at[index, 'class'] = 'junk1'
+            elif letter == pred_letters[pred_i].letter and letter_count == ht.FRAMES_TO_PRINT:
+                counting_letter = letter
+                #Predicted letter is not mapped
+                if not pred_letters[pred_i].is_mapped:
+                    for i in counted_list:
+                        data_frame.at[i, 'class'] = 'junk2'
+                    data_frame.at[index, 'class'] = 'junk3'
+                elif pred_letters[pred_i].letter != true_letters[pred_letters[pred_i].mapped_pos[0]].letter:
+                    # Predicted letter is mapped to a different true letter
+                    data_frame.at[index,'class'] = true_letters[pred_letters[pred_i].mapped_pos[0]].letter
+                    for i in counted_list:
+                        data_frame.at[i,'class'] = true_letters[pred_letters[pred_i].mapped_pos[0]].letter
+                counted_list.clear()
+                # letter_count = letter_count + 1
+            elif letter == pred_letters[pred_i].letter:
+                letter_count = letter_count + 1
+                counted_list.append(index)
     
     data_frame['class'] = classes
-    data_frame.to_csv("hund2.csv", header="True", index=False)
+    data_frame.to_csv("data\pred_corr.csv", header="True", index=False)
 
 
     
 
-my_list = ["HUND"]
-parse_feedback_file("predict.txt", my_list)
+my_list = ["HEAD"]
+parse_feedback_file("data\predict.txt", my_list)

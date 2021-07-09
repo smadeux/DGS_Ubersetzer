@@ -1,7 +1,5 @@
-# import time
 import os
 import os.path
-# from pathlib import Path
 import csv
 
 import cv2
@@ -10,14 +8,12 @@ import numpy as np
 import pandas as pd
 import pickle
 
-# from pandas import core
-
 FRAME_COUNT = 1
 FRAMES_TO_PRINT = 4
-TRAINING_CSV = 'coords.csv'
-PREDICTION_CSV = 'predict.csv'
-PREDICTION_FILE = 'predict.txt'
-LOG_FILE = 'log.txt'
+TRAINING_CSV = 'data\coords.csv'
+PREDICTION_CSV = 'data\predict.csv'
+PREDICTION_FILE = 'data\predict.txt'
+LOG_FILE = 'data\log.txt'
 
 class HandTracker:
     def __init__(self, static_image_mode=False, 

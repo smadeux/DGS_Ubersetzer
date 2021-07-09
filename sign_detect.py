@@ -5,4 +5,4 @@ import model_trainer as md
 
 tracker = ht.HandTracker(training=False, min_detection_confidence=0.7)
 
-tracker.camera_capture(source="assets/test/hund.mp4")
+tracker.camera_capture(source="assets/test/head.mp4")
