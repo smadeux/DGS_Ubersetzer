@@ -137,7 +137,9 @@ class HandTracker:
         else:
             self.predict_file.write(self.predicted_signs)
             self.predict_file.write("\n")
+            print()
+            return self.predicted_signs
             self.sign_counter = 0
             self.prev_sign = ''
             self.predicted_signs = ''
-            print()
+            

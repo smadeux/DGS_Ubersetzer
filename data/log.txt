@@ -1811,4 +1811,109 @@ Avg Percent Correct: 71.4243
 Accuracy Score Test
 0.773596599964583
 
-Predicted this afterwards: HUSNMZD
+Predicted this afterwards: HUSNMZDBack to loss='log'
+model.score:  0.7806711125224939
+Accuracy Score Test
+0.7806711125224939
+Confution Matrix Test
+0: 97.0075% Correct
+1: 94.8944% Correct
+2: 83.7150% Correct
+3: 81.4010% Correct
+4: 87.0879% Correct
+5: 100.0000% Correct
+6: 84.2482% Correct
+7: 88.7179% Correct
+8: 93.4827% Correct
+9: 44.6078% Correct
+10: 98.2143% Correct
+11: 84.9462% Correct
+12: 68.1690% Correct
+13: 59.5308% Correct
+14: 91.5152% Correct
+15: 53.6517% Correct
+16: 88.2576% Correct
+17: 70.2454% Correct
+18: 75.2914% Correct
+19: 96.4844% Correct
+20: 46.3557% Correct
+21: 0.0000% Correct
+22: 91.9881% Correct
+23: 86.4322% Correct
+24: 72.7273% Correct
+25: 22.8972% Correct
+26: 0.0000% Correct
+Avg Percent Correct: 72.6618
+
+
+Back to loss='log'
+model.score:  0.749762733312243
+Accuracy Score Test
+0.749762733312243
+Confution Matrix Test
+0: 88.2500% Correct
+1: 95.0178% Correct
+2: 82.0972% Correct
+3: 76.0870% Correct
+4: 85.4396% Correct
+5: 100.0000% Correct
+6: 83.3735% Correct
+7: 92.9114% Correct
+8: 94.5263% Correct
+9: 37.5635% Correct
+10: 96.4680% Correct
+11: 93.8931% Correct
+12: 78.5075% Correct
+13: 46.5714% Correct
+14: 88.9503% Correct
+15: 14.9560% Correct
+16: 89.4161% Correct
+17: 20.5714% Correct
+18: 96.3964% Correct
+19: 92.2807% Correct
+20: 82.1212% Correct
+21: 1.7065% Correct
+22: 90.5063% Correct
+23: 71.3217% Correct
+24: 47.1939% Correct
+25: 36.5741% Correct
+26: 0.0000% Correct
+Avg Percent Correct: 69.7297
+
+
+Use webcam for training? y/n: Back to loss='log'
+model.score:  0.7611093602269146
+Accuracy Score Test
+0.7611093602269146
+Confution Matrix Test
+0: 96.9925% Correct
+1: 95.1613% Correct
+2: 79.7927% Correct
+3: 79.5349% Correct
+4: 85.4795% Correct
+5: 100.0000% Correct
+6: 85.7143% Correct
+7: 94.7761% Correct
+8: 93.9914% Correct
+9: 61.4286% Correct
+10: 97.4082% Correct
+11: 88.1919% Correct
+12: 67.1429% Correct
+13: 48.2456% Correct
+14: 92.3729% Correct
+15: 27.4788% Correct
+16: 88.5609% Correct
+17: 47.6744% Correct
+18: 80.6818% Correct
+19: 88.7273% Correct
+20: 77.2603% Correct
+21: 0.0000% Correct
+22: 89.1176% Correct
+23: 79.0323% Correct
+24: 49.8741% Correct
+25: 15.8654% Correct
+26: 0.0000% Correct
+Avg Percent Correct: 70.7595
+
+
+Use webcam for training? y/n: 

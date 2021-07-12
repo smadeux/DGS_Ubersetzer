@@ -40,20 +40,15 @@ similar_letter = {
             'Z': ['L', 'P', 'X', 'M'],
         }
 
-def parse_feedback_file(txt_file_name, true_words):
-    # Put letters into respective objects
-    file = open(txt_file_name)
-    file_words = file.readlines()
-    assert(len(file_words) == len(true_words))
-
-    for file_word, true_word in zip(file_words, true_words):
-        pred, true = seperate_letters(file_word, true_word)
-        success, pred, true = map_true_to_pred(pred, true)
-        if not success:
-            print("Too much uncertainty!")
-        print_pred_letter_list(true)
-        print_pred_letter_list(pred)
-        edit_csv("data\predict.csv", pred, true)
+def parse_feedback_file(pred_word, true_word):
+    print(true_word)
+    pred, true = seperate_letters(pred_word, true_word)
+    success, pred, true = map_true_to_pred(pred, true)
+    if not success:
+        print("Too much uncertainty!")
+    print_pred_letter_list(true)
+    print_pred_letter_list(pred)
+    edit_csv("data\predict.csv", pred, true)
 
 
 def seperate_letters(file_word, true_word):
@@ -186,13 +181,10 @@ def edit_csv(csv_file_name, pred_letters, true_letters):
     
     data_frame['class'] = classes
     data_frame.to_csv("coords.csv", header=False, index=False, mode='a')
+    print("Self learning complete")
 
 
-
-my_list = ["HUND"]
-parse_feedback_file("data\predict.txt", my_list)
-# f = open('sign_lang.pkl', 'rb')
-# model = pickle.load(f)
-mt.train_model("coords.csv")
-mt.test_complete_model()
+# my_list = ["HUND"]
+# parse_feedback_file("data\predict.txt", my_list)
+# mt.train_model("coords.csv")
 
