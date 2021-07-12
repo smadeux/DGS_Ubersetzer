@@ -1,7 +1,9 @@
 from dataclasses import dataclass, field
 import pandas as pd
+import pickle
 
 import hand_tracker as ht
+import model_trainer as mt
 
 @dataclass
 class Pred_letter:
@@ -43,8 +45,6 @@ def parse_feedback_file(txt_file_name, true_words):
     file = open(txt_file_name)
     file_words = file.readlines()
     assert(len(file_words) == len(true_words))
-    # print(len(file_words))
-    # print(len(true_words))
 
     for file_word, true_word in zip(file_words, true_words):
         pred, true = seperate_letters(file_word, true_word)
@@ -132,7 +132,6 @@ def count_unmapped(list_of_letters):
     return count
 
 def print_pred_letter_list(list_of_letters):
-    # print("print func")
     for letter in list_of_letters:
         print("{} {}".format(letter.letter, letter.mapped_pos))
     print("")
@@ -148,12 +147,10 @@ def edit_csv(csv_file_name, pred_letters, true_letters):
     for index, letter in enumerate(classes):
         if pred_i > len(pred_letters) - 1:
             
-            data_frame.at[index, 'class'] = 'junk5'
+            data_frame.at[index, 'class'] = 'junk'
             continue
         else:
             # Skip unmapped letters
-            print("pred_i: {}".format(pred_i))
-            print("len: {}".format(len(pred_letters)))
             while not pred_letters[pred_i].is_mapped:
                 if pred_i < len(pred_letters) - 1:
                     pred_i = pred_i + 1
@@ -164,18 +161,18 @@ def edit_csv(csv_file_name, pred_letters, true_letters):
                 letter_count = 0
                 counting_letter = ''
             if pred_i > len(pred_letters) - 1 or not pred_letters[pred_i].is_mapped:
-                data_frame.at[index, 'class'] = 'junk4'
+                data_frame.at[index, 'class'] = 'junk'
                 continue
             if letter != pred_letters[pred_i].letter:
                 letter_count = 0
-                data_frame.at[index, 'class'] = 'junk1'
+                data_frame.at[index, 'class'] = 'junk'
             elif letter == pred_letters[pred_i].letter and letter_count == ht.FRAMES_TO_PRINT:
                 counting_letter = letter
                 #Predicted letter is not mapped
                 if not pred_letters[pred_i].is_mapped:
                     for i in counted_list:
-                        data_frame.at[i, 'class'] = 'junk2'
-                    data_frame.at[index, 'class'] = 'junk3'
+                        data_frame.at[i, 'class'] = 'junk'
+                    data_frame.at[index, 'class'] = 'junk'
                 elif pred_letters[pred_i].letter != true_letters[pred_letters[pred_i].mapped_pos[0]].letter:
                     # Predicted letter is mapped to a different true letter
                     data_frame.at[index,'class'] = true_letters[pred_letters[pred_i].mapped_pos[0]].letter
@@ -188,10 +185,14 @@ def edit_csv(csv_file_name, pred_letters, true_letters):
                 counted_list.append(index)
     
     data_frame['class'] = classes
-    data_frame.to_csv("data\pred_corr.csv", header="True", index=False)
+    data_frame.to_csv("coords.csv", header=False, index=False, mode='a')
 
 
-    
 
-my_list = ["HEAD"]
+my_list = ["HUND"]
 parse_feedback_file("data\predict.txt", my_list)
+# f = open('sign_lang.pkl', 'rb')
+# model = pickle.load(f)
+mt.train_model("coords.csv")
+mt.test_complete_model()
+

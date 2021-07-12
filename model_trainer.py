@@ -1,3 +1,6 @@
+import sys
+
+import numpy as np
 import pandas as pd
 import pickle
 from sklearn.model_selection import train_test_split
@@ -14,12 +17,15 @@ def train_model(file_name):
     array = dataframe.to_numpy()
     X = array[:,1:]
     y = array[:,0]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1234)
-    model = SGDClassifier(solver='liblinear')
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=999)
+
+    model = SGDClassifier(loss="log")
     model = model.fit(X_train, y_train)
 
     # Run tests.
-    print(file_name, ": ")
+    sys.stdout = open('data\log.txt', "a")
+    print("Back to loss='log'")
+    print("model.score: ", model.score(X_test, y_test))
     AI_tests.accuracy_score_test(model, X_test, y_test)
     AI_tests.confusion_matrix_test(model, X_train, X_test, y_train, y_test)
     print('\n')

@@ -82,7 +82,7 @@ class HandTracker:
         sign_prob = self.model.predict_proba(X)[0]
 
         # Only print prediction after certain number of frames
-        if self.prev_sign != sign_class:
+        if self.prev_sign != sign_class or sign_class == 'junk':
             self.sign_counter = 0
         else:
             self.sign_counter += 1

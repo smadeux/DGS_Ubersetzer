@@ -16,7 +16,6 @@ from sklearn.svm import SVC
 
 def confusion_matrix_test(model, X_train, X_test, y_train, y_test):
     print("Confution Matrix Test")
-    model.fit(X_train, y_train)
     predicted = model.predict(X_test)
     matrix = confusion_matrix(y_test, predicted)
     num_of_letters = 0
@@ -29,7 +28,7 @@ def confusion_matrix_test(model, X_train, X_test, y_train, y_test):
         print('{}: {:.4f}% Correct'.format(i, percent))
     avg_percent = total_percent/num_of_letters
     print('Avg Percent Correct: {:.4f}'.format(avg_percent))
-    print(matrix)
+    # print(matrix)
 
 def accuracy_score_test(model, X_test, y_test):
     print("Accuracy Score Test")
@@ -44,18 +43,4 @@ def split_and_create_model(dataframe):
     model = LogisticRegression(solver='liblinear')
 
     return X_train, X_test, y_train, y_test, model
-
-# kfold = model_selection.KFold(n_splits=5, random_state=7, shuffle=True)
-
-# np.random.seed(0)
-# X, y = load_iris(return_X_y=True)
-# indices = np.arange(y.shape[0])
-# np.random.shuffle(indices)
-# X, y = X[indices], y[indices]
-
-# train_scores, valid_scores = validation_curve(Ridge(), X, y, "alpha",
-#                                               np.logspace(-7, 3, 3),
-#                                               cv=5)
-
-# train_sizes, train_scores, valid_scores = learning_curve(SVC(kernel='linear'), X, y, train_sizes=[50, 80, 110], cv=5)
 
