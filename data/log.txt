@@ -1916,4 +1916,506 @@ Confution Matrix Test
 Avg Percent Correct: 70.7595
 
 
-Use webcam for training? y/n: 
+Use webcam for training? y/n: Test:
+Accuracy Score Test
+0.7552211302211302
+Confution Matrix Test
+0: 73.9326% Correct
+1: 94.9429% Correct
+2: 82.8804% Correct
+3: 78.2805% Correct
+4: 79.4195% Correct
+5: 100.0000% Correct
+6: 84.5966% Correct
+7: 90.0709% Correct
+8: 94.0803% Correct
+9: 46.6321% Correct
+10: 97.9638% Correct
+11: 87.7193% Correct
+12: 74.9280% Correct
+13: 30.5810% Correct
+14: 92.6761% Correct
+15: 71.3018% Correct
+16: 83.6667% Correct
+17: 26.0870% Correct
+18: 98.6607% Correct
+19: 93.8224% Correct
+20: 73.9726% Correct
+21: 3.1250% Correct
+22: 90.0312% Correct
+23: 59.2040% Correct
+24: 70.9007% Correct
+25: 31.1927% Correct
+26: 3.5714% Correct
+Avg Percent Correct: 70.8978
+
+
+Test:
+Accuracy Score Test
+0.74498361998362
+Confution Matrix Test
+0: 97.0787% Correct
+1: 94.9429% Correct
+2: 78.8043% Correct
+3: 76.4706% Correct
+4: 89.1821% Correct
+5: 100.0000% Correct
+6: 87.7751% Correct
+7: 89.3617% Correct
+8: 95.9831% Correct
+9: 44.0415% Correct
+10: 97.0588% Correct
+11: 86.6667% Correct
+12: 76.3689% Correct
+13: 29.9694% Correct
+14: 92.6761% Correct
+15: 68.0473% Correct
+16: 85.0000% Correct
+17: 40.9938% Correct
+18: 62.7232% Correct
+19: 88.8031% Correct
+20: 69.3151% Correct
+21: 1.0417% Correct
+22: 89.7196% Correct
+23: 71.8905% Correct
+24: 49.8845% Correct
+25: 14.2202% Correct
+26: 8.5714% Correct
+Avg Percent Correct: 69.8737
+
+
+Test:
+Accuracy Score Test
+0.7496928746928747
+Confution Matrix Test
+0: 97.0787% Correct
+1: 94.9429% Correct
+2: 78.2609% Correct
+3: 75.7919% Correct
+4: 85.7520% Correct
+5: 100.0000% Correct
+6: 86.3081% Correct
+7: 88.6525% Correct
+8: 96.4059% Correct
+9: 47.6684% Correct
+10: 97.9638% Correct
+11: 92.6316% Correct
+12: 67.4352% Correct
+13: 39.4495% Correct
+14: 92.6761% Correct
+15: 73.6686% Correct
+16: 82.6667% Correct
+17: 58.0745% Correct
+18: 70.3125% Correct
+19: 92.2780% Correct
+20: 69.3151% Correct
+21: 0.0000% Correct
+22: 89.7196% Correct
+23: 74.1294% Correct
+24: 33.2564% Correct
+25: 15.5963% Correct
+26: 5.7143% Correct
+Avg Percent Correct: 70.5833
+
+
+Test:
+Accuracy Score Test
+0.7550518550197798
+Confution Matrix Test
+0: 88.9169% Correct
+1: 95.4386% Correct
+2: 86.0892% Correct
+3: 76.6234% Correct
+4: 86.2534% Correct
+5: 100.0000% Correct
+6: 86.8293% Correct
+7: 87.3973% Correct
+8: 95.3092% Correct
+9: 41.7910% Correct
+10: 97.4630% Correct
+11: 92.9329% Correct
+12: 82.5073% Correct
+13: 18.7117% Correct
+14: 88.9535% Correct
+15: 63.4146% Correct
+16: 85.8131% Correct
+17: 63.8298% Correct
+18: 97.5281% Correct
+19: 93.2000% Correct
+20: 56.0694% Correct
+21: 0.0000% Correct
+22: 93.1250% Correct
+23: 77.4194% Correct
+24: 13.2653% Correct
+25: 13.2701% Correct
+26: 0.0000% Correct
+Avg Percent Correct: 69.7093
+
+
+Test:
+Accuracy Score Test
+0.7696995616379771
+Confution Matrix Test
+0: 97.2292% Correct
+1: 95.4386% Correct
+2: 82.9396% Correct
+3: 82.0779% Correct
+4: 87.0620% Correct
+5: 100.0000% Correct
+6: 88.7805% Correct
+7: 82.4658% Correct
+8: 95.5224% Correct
+9: 46.2687% Correct
+10: 95.1374% Correct
+11: 90.1060% Correct
+12: 72.8863% Correct
+13: 34.3558% Correct
+14: 89.5349% Correct
+15: 74.0854% Correct
+16: 85.4671% Correct
+17: 62.6140% Correct
+18: 88.3146% Correct
+19: 91.6000% Correct
+20: 61.5607% Correct
+21: 0.6849% Correct
+22: 93.1250% Correct
+23: 73.2010% Correct
+24: 42.3469% Correct
+25: 7.5829% Correct
+26: 0.0000% Correct
+Avg Percent Correct: 71.1255
+
+
+Test:
+Accuracy Score Test
+0.7664920346412916
+Confution Matrix Test
+0: 97.2292% Correct
+1: 95.2632% Correct
+2: 93.9633% Correct
+3: 79.4805% Correct
+4: 86.2534% Correct
+5: 100.0000% Correct
+6: 86.3415% Correct
+7: 88.2192% Correct
+8: 94.4563% Correct
+9: 34.8259% Correct
+10: 97.2516% Correct
+11: 89.7527% Correct
+12: 71.4286% Correct
+13: 21.4724% Correct
+14: 83.4302% Correct
+15: 73.7805% Correct
+16: 77.1626% Correct
+17: 23.4043% Correct
+18: 85.1685% Correct
+19: 92.8000% Correct
+20: 78.0347% Correct
+21: 0.0000% Correct
+22: 93.1250% Correct
+23: 83.8710% Correct
+24: 58.4184% Correct
+25: 18.0095% Correct
+26: 0.0000% Correct
+Avg Percent Correct: 70.4867
+
+
+Test:
+Accuracy Score Test
+0.7565487009515663
+Confution Matrix Test
+0: 97.2292% Correct
+1: 95.6140% Correct
+2: 84.7769% Correct
+3: 75.3247% Correct
+4: 85.9838% Correct
+5: 100.0000% Correct
+6: 88.0488% Correct
+7: 86.3014% Correct
+8: 96.3753% Correct
+9: 44.2786% Correct
+10: 98.0973% Correct
+11: 92.9329% Correct
+12: 76.6764% Correct
+13: 38.3436% Correct
+14: 89.2442% Correct
+15: 53.0488% Correct
+16: 85.8131% Correct
+17: 58.9666% Correct
+18: 77.5281% Correct
+19: 90.4000% Correct
+20: 55.2023% Correct
+21: 0.0000% Correct
+22: 93.1250% Correct
+23: 60.2978% Correct
+24: 31.8878% Correct
+25: 49.7630% Correct
+26: 0.0000% Correct
+Avg Percent Correct: 70.5652
+
+
+Test:
+Accuracy Score Test
+0.7678875638841567
+Confution Matrix Test
+0: 97.0075% Correct
+1: 95.2880% Correct
+2: 83.7209% Correct
+3: 74.0933% Correct
+4: 83.5135% Correct
+5: 100.0000% Correct
+6: 87.3206% Correct
+7: 86.5169% Correct
+8: 94.7589% Correct
+9: 41.8719% Correct
+10: 96.9163% Correct
+11: 90.1695% Correct
+12: 81.8731% Correct
+13: 17.8788% Correct
+14: 91.5966% Correct
+15: 62.0482% Correct
+16: 86.4111% Correct
+17: 11.3772% Correct
+18: 90.5286% Correct
+19: 93.6759% Correct
+20: 83.2317% Correct
+21: 2.4138% Correct
+22: 94.0828% Correct
+23: 74.7989% Correct
+24: 69.8454% Correct
+25: 28.5714% Correct
+26: 0.0000% Correct
+Avg Percent Correct: 71.0930
+
+
+GMO
+G [0]
+N [1]
+O [2]
+M []
+
+G [0]
+M [1]
+O [2]
+
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 54 entries, 0 to 53
+Data columns (total 61 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   class   54 non-null     object 
+ 1   x1_0    54 non-null     float64
+ 2   y1_0    54 non-null     float64
+ 3   z1_0    54 non-null     float64
+ 4   x2_0    54 non-null     float64
+ 5   y2_0    54 non-null     float64
+ 6   z2_0    54 non-null     float64
+ 7   x3_0    54 non-null     float64
+ 8   y3_0    54 non-null     float64
+ 9   z3_0    54 non-null     float64
+ 10  x4_0    54 non-null     float64
+ 11  y4_0    54 non-null     float64
+ 12  z4_0    54 non-null     float64
+ 13  x5_0    54 non-null     float64
+ 14  y5_0    54 non-null     float64
+ 15  z5_0    54 non-null     float64
+ 16  x6_0    54 non-null     float64
+ 17  y6_0    54 non-null     float64
+ 18  z6_0    54 non-null     float64
+ 19  x7_0    54 non-null     float64
+ 20  y7_0    54 non-null     float64
+ 21  z7_0    54 non-null     float64
+ 22  x8_0    54 non-null     float64
+ 23  y8_0    54 non-null     float64
+ 24  z8_0    54 non-null     float64
+ 25  x9_0    54 non-null     float64
+ 26  y9_0    54 non-null     float64
+ 27  z9_0    54 non-null     float64
+ 28  x10_0   54 non-null     float64
+ 29  y10_0   54 non-null     float64
+ 30  z10_0   54 non-null     float64
+ 31  x11_0   54 non-null     float64
+ 32  y11_0   54 non-null     float64
+ 33  z11_0   54 non-null     float64
+ 34  x12_0   54 non-null     float64
+ 35  y12_0   54 non-null     float64
+ 36  z12_0   54 non-null     float64
+ 37  x13_0   54 non-null     float64
+ 38  y13_0   54 non-null     float64
+ 39  z13_0   54 non-null     float64
+ 40  x14_0   54 non-null     float64
+ 41  y14_0   54 non-null     float64
+ 42  z14_0   54 non-null     float64
+ 43  x15_0   54 non-null     float64
+ 44  y15_0   54 non-null     float64
+ 45  z15_0   54 non-null     float64
+ 46  x16_0   54 non-null     float64
+ 47  y16_0   54 non-null     float64
+ 48  z16_0   54 non-null     float64
+ 49  x17_0   54 non-null     float64
+ 50  y17_0   54 non-null     float64
+ 51  z17_0   54 non-null     float64
+ 52  x18_0   54 non-null     float64
+ 53  y18_0   54 non-null     float64
+ 54  z18_0   54 non-null     float64
+ 55  x19_0   54 non-null     float64
+ 56  y19_0   54 non-null     float64
+ 57  z19_0   54 non-null     float64
+ 58  x20_0   54 non-null     float64
+ 59  y20_0   54 non-null     float64
+ 60  z20_0   54 non-null     float64
+dtypes: float64(60), object(1)
+memory usage: 25.9+ KB
+Self learning complete
+Test:
+Accuracy Score Test
+0.765043589198384
+Confution Matrix Test
+0: 97.0149% Correct
+1: 94.9477% Correct
+2: 84.0617% Correct
+3: 78.9610% Correct
+4: 85.0949% Correct
+5: 100.0000% Correct
+6: 85.9606% Correct
+7: 84.7458% Correct
+8: 96.3636% Correct
+9: 55.6604% Correct
+10: 96.9565% Correct
+11: 90.7473% Correct
+12: 75.6598% Correct
+13: 33.6310% Correct
+14: 91.5531% Correct
+15: 64.9231% Correct
+16: 87.6712% Correct
+17: 54.7112% Correct
+18: 66.6667% Correct
+19: 91.6667% Correct
+20: 65.9236% Correct
+21: 0.0000% Correct
+22: 91.9881% Correct
+23: 69.7970% Correct
+24: 43.8642% Correct
+25: 40.9091% Correct
+26: 0.0000% Correct
+Avg Percent Correct: 71.4622
+
+
+GAOA
+G [0]
+N [1]
+O [2]
+M [3]
+
+G [0]
+A [1]
+O [2]
+A [3]
+
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 54 entries, 0 to 53
+Data columns (total 61 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   class   54 non-null     object 
+ 1   x1_0    54 non-null     float64
+ 2   y1_0    54 non-null     float64
+ 3   z1_0    54 non-null     float64
+ 4   x2_0    54 non-null     float64
+ 5   y2_0    54 non-null     float64
+ 6   z2_0    54 non-null     float64
+ 7   x3_0    54 non-null     float64
+ 8   y3_0    54 non-null     float64
+ 9   z3_0    54 non-null     float64
+ 10  x4_0    54 non-null     float64
+ 11  y4_0    54 non-null     float64
+ 12  z4_0    54 non-null     float64
+ 13  x5_0    54 non-null     float64
+ 14  y5_0    54 non-null     float64
+ 15  z5_0    54 non-null     float64
+ 16  x6_0    54 non-null     float64
+ 17  y6_0    54 non-null     float64
+ 18  z6_0    54 non-null     float64
+ 19  x7_0    54 non-null     float64
+ 20  y7_0    54 non-null     float64
+ 21  z7_0    54 non-null     float64
+ 22  x8_0    54 non-null     float64
+ 23  y8_0    54 non-null     float64
+ 24  z8_0    54 non-null     float64
+ 25  x9_0    54 non-null     float64
+ 26  y9_0    54 non-null     float64
+ 27  z9_0    54 non-null     float64
+ 28  x10_0   54 non-null     float64
+ 29  y10_0   54 non-null     float64
+ 30  z10_0   54 non-null     float64
+ 31  x11_0   54 non-null     float64
+ 32  y11_0   54 non-null     float64
+ 33  z11_0   54 non-null     float64
+ 34  x12_0   54 non-null     float64
+ 35  y12_0   54 non-null     float64
+ 36  z12_0   54 non-null     float64
+ 37  x13_0   54 non-null     float64
+ 38  y13_0   54 non-null     float64
+ 39  z13_0   54 non-null     float64
+ 40  x14_0   54 non-null     float64
+ 41  y14_0   54 non-null     float64
+ 42  z14_0   54 non-null     float64
+ 43  x15_0   54 non-null     float64
+ 44  y15_0   54 non-null     float64
+ 45  z15_0   54 non-null     float64
+ 46  x16_0   54 non-null     float64
+ 47  y16_0   54 non-null     float64
+ 48  z16_0   54 non-null     float64
+ 49  x17_0   54 non-null     float64
+ 50  y17_0   54 non-null     float64
+ 51  z17_0   54 non-null     float64
+ 52  x18_0   54 non-null     float64
+ 53  y18_0   54 non-null     float64
+ 54  z18_0   54 non-null     float64
+ 55  x19_0   54 non-null     float64
+ 56  y19_0   54 non-null     float64
+ 57  z19_0   54 non-null     float64
+ 58  x20_0   54 non-null     float64
+ 59  y20_0   54 non-null     float64
+ 60  z20_0   54 non-null     float64
+dtypes: float64(60), object(1)
+memory usage: 25.9+ KB
+Self learning complete
+Test:
+Accuracy Score Test
+0.7639876844675656
+Confution Matrix Test
+0: 96.5174% Correct
+1: 95.2715% Correct
+2: 98.2278% Correct
+3: 75.0649% Correct
+4: 85.8696% Correct
+5: 99.7674% Correct
+6: 84.9515% Correct
+7: 90.9589% Correct
+8: 97.0588% Correct
+9: 40.2985% Correct
+10: 96.8750% Correct
+11: 92.1769% Correct
+12: 79.7619% Correct
+13: 34.0361% Correct
+14: 70.6849% Correct
+15: 42.9012% Correct
+16: 89.4545% Correct
+17: 74.4745% Correct
+18: 91.6849% Correct
+19: 93.1174% Correct
+20: 50.9146% Correct
+21: 4.5614% Correct
+22: 91.1315% Correct
+23: 70.5736% Correct
+24: 28.3854% Correct
+25: 42.0561% Correct
+26: 0.0000% Correct
+Avg Percent Correct: 70.9917
+
+
+GMCCA
+GMCCA
+BDAXT
+BDAXT

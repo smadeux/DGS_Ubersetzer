@@ -40,12 +40,16 @@ class HandTracker:
         
 
         # Set up CSV file
+        exists = True
         write_file_name = TRAINING_CSV if training else PREDICTION_CSV
-        if os.path.exists(write_file_name):
-            os.remove(write_file_name)
+        if not os.path.exists(write_file_name):
+            exists = False
+        elif not training:
+            os.remove(PREDICTION_CSV)
         self.csv_file = open(write_file_name, mode='a', newline='')
         self.csv_writer = csv.writer(self.csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        self.csv_writer.writerow(self.csv_header)
+        if exists:
+            self.csv_writer.writerow(self.csv_header)
 
         # Log file
         self.log_file = open(LOG_FILE, mode='a', newline='')
@@ -74,7 +78,7 @@ class HandTracker:
         coords_row.insert(0, sign)
         self.csv_writer.writerow(coords_row)
 
-    def predict_sign(self, coords_row):
+    def predict_sign(self, coords_row, sandbox, img):
         np.set_printoptions(suppress=True)
         X = pd.DataFrame([coords_row])
         sign_class = self.model.predict(X)[0]
@@ -86,15 +90,26 @@ class HandTracker:
             self.sign_counter = 0
         else:
             self.sign_counter += 1
+            if sandbox:
+                cv2.putText(img, sign_class, 
+                            (10, 100), 
+                            cv2.FONT_HERSHEY_SIMPLEX, 
+                            1,
+                            (0, 0, 0),
+                            2)
             if self.sign_counter == FRAMES_TO_PRINT:
                 print(sign_class, end='')
                 self.predicted_signs += sign_class
         self.prev_sign = sign_class
 
-    def camera_capture(self, sign="", source=0):
+    def camera_capture(self, sign="", source=0,
+                       sandbox=False):
         cap = cv2.VideoCapture(source)
         cap.set(3, 640)
         cap.set(4, 480)
+        self.sign_counter = 0
+        self.prev_sign = ''
+        self.predicted_signs = ''
 
         with self.mp_hands.Hands(
                 min_detection_confidence=self.min_detection_confidence,
@@ -122,7 +137,7 @@ class HandTracker:
                         if self.training:
                             self.points_to_csv(sign, coords_row)
                         else:
-                            self.predict_sign(coords_row)
+                            self.predict_sign(coords_row, sandbox, img)
 
                 cv2.imshow("Image", img)
 
@@ -132,14 +147,12 @@ class HandTracker:
                         self.f.close()
                     break
 
-        if self.training:
-            return self.dataframe, self.dataframe_norot, self.sign_list, self.sign_list_norot
-        else:
+        if not self.training:
             self.predict_file.write(self.predicted_signs)
             self.predict_file.write("\n")
+            self.f.close()
+            self.csv_file.close()
             print()
             return self.predicted_signs
-            self.sign_counter = 0
-            self.prev_sign = ''
-            self.predicted_signs = ''
+            
             

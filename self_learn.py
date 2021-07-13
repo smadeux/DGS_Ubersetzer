@@ -41,20 +41,18 @@ similar_letter = {
         }
 
 def parse_feedback_file(pred_word, true_word):
-    print(true_word)
     pred, true = seperate_letters(pred_word, true_word)
     success, pred, true = map_true_to_pred(pred, true)
     if not success:
         print("Too much uncertainty!")
     print_pred_letter_list(true)
     print_pred_letter_list(pred)
-    edit_csv("data\predict.csv", pred, true)
-
+    edit_csv(ht.PREDICTION_CSV, pred, true)
 
 def seperate_letters(file_word, true_word):
     pred_letters = []
     true_letters = []
-    for l in file_word[:-1]:
+    for l in file_word:
         pred_letters.append(Pred_letter(letter = l))
     for l in true_word:
         true_letters.append(Pred_letter(letter = l))
@@ -180,11 +178,5 @@ def edit_csv(csv_file_name, pred_letters, true_letters):
                 counted_list.append(index)
     
     data_frame['class'] = classes
-    data_frame.to_csv("coords.csv", header=False, index=False, mode='a')
+    data_frame.to_csv(ht.TRAINING_CSV, header=False, index=False, mode='a')
     print("Self learning complete")
-
-
-# my_list = ["HUND"]
-# parse_feedback_file("data\predict.txt", my_list)
-# mt.train_model("coords.csv")
-

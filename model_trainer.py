@@ -1,3 +1,4 @@
+from os import access
 import sys
 
 import numpy as np
@@ -24,12 +25,13 @@ def train_model(file_name):
 
     # Run tests.
     sys.stdout = open('data\log.txt', "a")
-    print("Back to loss='log'")
-    print("model.score: ", model.score(X_test, y_test))
-    AI_tests.accuracy_score_test(model, X_test, y_test)
-    AI_tests.confusion_matrix_test(model, X_train, X_test, y_train, y_test)
+    print("Test:")
+    acc_result = AI_tests.accuracy_score_test(model, X_test, y_test)
+    matrix_result = AI_tests.confusion_matrix_test(model, X_train, X_test, y_train, y_test)
     print('\n')
 
     # Export model.
     with open('sign_lang.pkl', 'wb') as f:
         model = pickle.dump(model, f)
+
+    return "{}\n{}".format(acc_result, matrix_result)

@@ -29,11 +29,14 @@ def confusion_matrix_test(model, X_train, X_test, y_train, y_test):
     avg_percent = total_percent/num_of_letters
     print('Avg Percent Correct: {:.4f}'.format(avg_percent))
     # print(matrix)
+    return "Confution Matrix Test\nAvg Percent Correct: {:.4f}".format(avg_percent)
 
 def accuracy_score_test(model, X_test, y_test):
     print("Accuracy Score Test")
     yhat = model.predict(X_test)
-    print(accuracy_score(y_test, yhat))
+    accuracy = accuracy_score(y_test, yhat)
+    print(accuracy)
+    return "Accuracy Score Test: {:.4f}".format(accuracy)
 
 def split_and_create_model(dataframe):
     array = dataframe.to_numpy()
