@@ -9,10 +9,12 @@ from sklearn.model_selection import validation_curve
 from sklearn.datasets import load_iris
 from sklearn.linear_model import Ridge
 
-
-import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve
-from sklearn.svm import SVC
+
+letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+           'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+           'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+           'Y', 'Z', 'junk']
 
 def confusion_matrix_test(model, X_train, X_test, y_train, y_test):
     print("Confution Matrix Test")
@@ -25,11 +27,11 @@ def confusion_matrix_test(model, X_train, X_test, y_train, y_test):
         sum = np.sum(letter)
         percent = (letter[i]/sum)*100
         total_percent += percent
-        print('{}: {:.4f}% Correct'.format(i, percent))
+        print('{}: {:.4f}% Correct'.format(letters[i], percent))
     avg_percent = total_percent/num_of_letters
     print('Avg Percent Correct: {:.4f}'.format(avg_percent))
-    # print(matrix)
-    return "Confution Matrix Test\nAvg Percent Correct: {:.4f}".format(avg_percent)
+    print(matrix)
+    return "Confusion Matrix Test\nAvg Percent Correct: {:.4f}".format(avg_percent)
 
 def accuracy_score_test(model, X_test, y_test):
     print("Accuracy Score Test")

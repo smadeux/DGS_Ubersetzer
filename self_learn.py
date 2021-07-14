@@ -1,9 +1,7 @@
 from dataclasses import dataclass, field
 import pandas as pd
-import pickle
 
 import hand_tracker as ht
-import model_trainer as mt
 
 @dataclass
 class Pred_letter:
@@ -172,7 +170,6 @@ def edit_csv(csv_file_name, pred_letters, true_letters):
                     for i in counted_list:
                         data_frame.at[i,'class'] = true_letters[pred_letters[pred_i].mapped_pos[0]].letter
                 counted_list.clear()
-                # letter_count = letter_count + 1
             elif letter == pred_letters[pred_i].letter:
                 letter_count = letter_count + 1
                 counted_list.append(index)

@@ -13,7 +13,7 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 import AI_tests
 
 def train_model(file_name):
-    # Get data, split into trainng and testing partitions, and train the model.
+    # Get data from csv, split into trainng and testing partitions, and train the model.
     dataframe = pd.read_csv(file_name)
     array = dataframe.to_numpy()
     X = array[:,1:]
